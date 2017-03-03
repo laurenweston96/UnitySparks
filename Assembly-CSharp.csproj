@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{C5591AA8-108B-A086-F1C5-85FA4810F7CC}</ProjectGuid>
+    <ProjectGuid>{DE56721B-BB5A-085E-0722-AD591F8BCB69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\Choice.cs" />
      <Compile Include="Assets\Resources\Scripts\DialogueBox.cs" />
      <Compile Include="Assets\Resources\Scripts\DialogueParser.cs" />
      <None Include="Assets\Resources\phrases.txt" />

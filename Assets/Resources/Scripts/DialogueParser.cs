@@ -57,12 +57,19 @@ public class DialogueParser : MonoBehaviour {
 					string[] lineValues = line.Split(',');
 
 					//Get numbers from the line for ID, nextID, rating
-					int ID, nextID, rating;
-					if( !Int32.TryParse(lineValues[0], out ID) |
-						!Int32.TryParse(lineValues[1], out nextID) |
-						!Int32.TryParse(lineValues[3], out rating))
+					int ID, nextID, rating, toDiscard;
+					ID = nextID = rating = -1;
+
+					if( !Int32.TryParse(lineValues[0], out toDiscard) |
+						!Int32.TryParse(lineValues[1], out toDiscard) |
+						!Int32.TryParse(lineValues[3], out toDiscard))
 						Console.WriteLine("One of the following is not a number\nID:" + lineValues[0] +
 							"\nNextID:" + lineValues[1] + "\nRating:" + lineValues[3]);
+					else {
+						ID = Int32.Parse(lineValues[0]);
+						nextID = Int32.Parse(lineValues[1]);
+						rating = Int32.Parse(lineValues[3]);
+					}
 
 
 					//Create the Attracts and offends arrays from a . separated section of the line
@@ -90,7 +97,7 @@ public class DialogueParser : MonoBehaviour {
 
 	public int GetID(int lineNumber)
 	{
-		if (lineNumber < lines.Count)
+		if (lineNumber >= 0 & lineNumber < lines.Count)
 			return lines [lineNumber].ID;
 
 		return -1;
@@ -98,7 +105,7 @@ public class DialogueParser : MonoBehaviour {
 
 	public int GetNextID(int lineNumber)
 	{
-		if (lineNumber < lines.Count)
+		if (lineNumber >= 0 & lineNumber < lines.Count)
 			return lines [lineNumber].nextID;
 
 		return -1;
@@ -114,7 +121,7 @@ public class DialogueParser : MonoBehaviour {
 
 	public int GetRating(int lineNumber)
 	{
-		if (lineNumber < lines.Count)
+		if (lineNumber >= 0 & lineNumber < lines.Count)
 			return lines [lineNumber].rating;
 
 		return -1;
