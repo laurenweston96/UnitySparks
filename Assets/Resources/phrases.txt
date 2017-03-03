@@ -1,0 +1,18 @@
+1,4,"Hi ",3,,
+2,4,"Yo ",-4,CHAV,
+3,4,"Howdy ",-2,COWBOY,CHAV
+4,7,"beautiful ",6,ROMANTIC,LAIDBACK.GOTH.SHY
+5,7,"partner ",-4,COWBOY,
+6,7,"mate ",-2,CHAV.LAIDBACK,
+7,10,"you are ",4,,
+8,13,"how did ",2,,
+9,16,"I want ",1,,
+10,,"cool ",3,CHAV,
+11,,"wild ",0,COWBOY,SHY
+12,,"my type ",6,ROMANTIC,LAIDBACK
+13,,"your dog die?",-7,GOTH,
+14,,"you get here?",5,,
+15,,"I know we'd be perfect?",2,ROMANTIC,GOTH.LAIDBACK
+16,,"you.",2,COWBOY.ROMANTIC,SHY
+17,,"to go.",-7,,
+18,,"my meemaw",-7,ROMANTIC.SHY,
