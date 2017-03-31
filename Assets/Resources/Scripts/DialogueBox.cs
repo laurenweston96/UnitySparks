@@ -12,6 +12,8 @@ public class DialogueBox : MonoBehaviour {
 	public string choice2Text;
 	public string choice3Text;
 	int lineNum;
+	int prevLineNum;
+	int buttonClicked;
 
 	public GUIStyle customStyle;
 	public GUIStyle choiceStyle;
@@ -29,12 +31,13 @@ public class DialogueBox : MonoBehaviour {
 		choice3Text = "";
 		parser = GameObject.Find ("DialogueParser").GetComponent<DialogueParser> ();
 		lineNum = 1;
+		buttonClicked = -1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (0)) {
-			if (lineNum > 0) {
+		if (buttonClicked > 0) {
+			if (lineNum >= 1) {
 				//Playing the game
 				if (lineNum == 1)
 					//Start of the game
@@ -45,9 +48,10 @@ public class DialogueBox : MonoBehaviour {
 				choice1Text = parser.GetPhrase (lineNum);
 				choice2Text = parser.GetPhrase (lineNum + 1);
 				choice3Text = parser.GetPhrase (lineNum + 2);
+				prevLineNum = lineNum;
 				//have this work for the lineNum YOU SELECTED
-				lineNum = parser.GetNextID (lineNum);
-				print("Going to " + lineNum);
+				lineNum = parser.GetNextID (prevLineNum + buttonClicked);
+				print ("Going to " + lineNum + " + " + buttonClicked);
 			} else {
 				//End of the game
 				dialogue = "Finito!";
@@ -55,7 +59,8 @@ public class DialogueBox : MonoBehaviour {
 				choice2Text = "";
 				choice3Text = "";
 			}
-
+			//Reset the button clicked
+			buttonClicked = -1;
 		}
 	}
 
@@ -74,21 +79,21 @@ public class DialogueBox : MonoBehaviour {
 									choiceWidth, //width
 									(float)Screen.height*0.12f //height
 									), choice1Text)) {
-			choice1Text = "poobert";
+			buttonClicked = 1;
 		}
 		if (GUI.Button (new Rect (	-20 + (padding * 2) + choiceWidth,  //Left most position
 									Screen.height - padding - 20,  //Top most position
 									choiceWidth, //width
 									(float)Screen.height*0.12f //height
 									), choice2Text)) {
-			choice1Text = "poobert";
+			buttonClicked = 2;
 		}
 		if (GUI.Button (new Rect (	Screen.width - padding - choiceWidth,  //Left most position
 									Screen.height - padding - 20,  //Top most position
 									choiceWidth, //width
 									(float)Screen.height*0.12f //height
 									), choice3Text)) {
-			choice1Text = "poobert";
+			buttonClicked = 3;
 		}
 	}
 }
