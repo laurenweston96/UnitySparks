@@ -28,15 +28,15 @@ public class DialogueBox : MonoBehaviour {
 		choice2Text = "";
 		choice3Text = "";
 		parser = GameObject.Find ("DialogueParser").GetComponent<DialogueParser> ();
-		lineNum = 0;
+		lineNum = 1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown (0)) {
-			if (lineNum >= 0) {
+			if (lineNum > 0) {
 				//Playing the game
-				if (lineNum == 0)
+				if (lineNum == 1)
 					//Start of the game
 					dialogue = "Select a choice below.";
 				else
@@ -47,6 +47,7 @@ public class DialogueBox : MonoBehaviour {
 				choice3Text = parser.GetPhrase (lineNum + 2);
 				//have this work for the lineNum YOU SELECTED
 				lineNum = parser.GetNextID (lineNum);
+				print("Going to " + lineNum);
 			} else {
 				//End of the game
 				dialogue = "Finito!";
@@ -60,9 +61,34 @@ public class DialogueBox : MonoBehaviour {
 
 	void OnGUI()
 	{
-		dialogue = GUI.TextField (new Rect (70, 300, 1000, 100), dialogue, customStyle);
-		choice1Text = GUI.TextField (new Rect ( 70, 420, 300, 60), choice1Text, choiceStyle);
-		choice2Text = GUI.TextField (new Rect (420, 420, 300, 60), choice2Text, choiceStyle);
-		choice3Text = GUI.TextField (new Rect (770, 420, 300, 60), choice3Text, choiceStyle);
+		float padding = Screen.width * 0.05f;
+		float choiceWidth = Screen.width * 0.28f;
+		dialogue = GUI.TextField (new Rect (0 + padding, //Left most position
+											Screen.height/2+padding, //Top most position
+											(float)Screen.width*0.9f, //width
+											(float)Screen.height*0.2f //height
+											), dialogue, customStyle);
+
+		if (GUI.Button (new Rect (	padding,  //Left most position
+									Screen.height - padding - 20,  //Top most position
+									choiceWidth, //width
+									(float)Screen.height*0.12f //height
+									), choice1Text)) {
+			choice1Text = "poobert";
+		}
+		if (GUI.Button (new Rect (	-20 + (padding * 2) + choiceWidth,  //Left most position
+									Screen.height - padding - 20,  //Top most position
+									choiceWidth, //width
+									(float)Screen.height*0.12f //height
+									), choice2Text)) {
+			choice1Text = "poobert";
+		}
+		if (GUI.Button (new Rect (	Screen.width - padding - choiceWidth,  //Left most position
+									Screen.height - padding - 20,  //Top most position
+									choiceWidth, //width
+									(float)Screen.height*0.12f //height
+									), choice3Text)) {
+			choice1Text = "poobert";
+		}
 	}
 }

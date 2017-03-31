@@ -106,7 +106,7 @@ public class DialogueParser : MonoBehaviour {
 	public int GetNextID(int lineNumber)
 	{
 		if (lineNumber >= 0 & lineNumber < lines.Count)
-			return lines [lineNumber].nextID;
+			return lines [lineNumber-1].nextID;
 
 		return -1;
 	}
@@ -114,7 +114,7 @@ public class DialogueParser : MonoBehaviour {
 	public string GetPhrase(int lineNumber)
 	{
 		if (lineNumber != -1 & lineNumber < lines.Count)
-			return lines [lineNumber].phrase;
+			return lines [lineNumber-1].phrase;
 
 		return "";
 	}
