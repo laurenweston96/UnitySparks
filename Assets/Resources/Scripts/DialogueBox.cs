@@ -30,34 +30,34 @@ public class DialogueBox : MonoBehaviour {
 		choice2Text = "";
 		choice3Text = "";
 		parser = GameObject.Find ("DialogueParser").GetComponent<DialogueParser> ();
-		lineNum = 1;
 		buttonClicked = -1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (buttonClicked > 0) {
-			if (lineNum >= 1) {
+		if (buttonClicked >= 0) {
+			//Playing the game
+			if (lineNum == 0) {
+				//Start of the game
+				lineNum = 1;
+
+				dialogue = "Select a choice below.";
+				printPhrasesAt (lineNum);
+
+				prevLineNum = 1;
+			} else {
 				//Playing the game
-				if (lineNum == 1)
-					//Start of the game
-					dialogue = "Select a choice below.";
-				else
-					//Playing the game
-					dialogue = "contruction of your phrase";
-				choice1Text = parser.GetPhrase (lineNum);
-				choice2Text = parser.GetPhrase (lineNum + 1);
-				choice3Text = parser.GetPhrase (lineNum + 2);
-				prevLineNum = lineNum;
+				dialogue = "contruction of your phrase";
 				//have this work for the lineNum YOU SELECTED
 				lineNum = parser.GetNextID (prevLineNum + buttonClicked);
-				print ("Going to " + lineNum + " + " + buttonClicked);
-			} else {
-				//End of the game
-				dialogue = "Finito!";
-				choice1Text = "";
-				choice2Text = "";
-				choice3Text = "";
+				if (lineNum == -1) {
+					//End of the game
+					dialogue = "Finito!";
+					choice1Text = choice2Text = choice3Text = "";
+				} else {
+					printPhrasesAt (lineNum);
+					prevLineNum = lineNum;
+				}
 			}
 			//Reset the button clicked
 			buttonClicked = -1;
@@ -79,21 +79,28 @@ public class DialogueBox : MonoBehaviour {
 									choiceWidth, //width
 									(float)Screen.height*0.12f //height
 									), choice1Text)) {
-			buttonClicked = 1;
+			buttonClicked = 0;
 		}
 		if (GUI.Button (new Rect (	-20 + (padding * 2) + choiceWidth,  //Left most position
 									Screen.height - padding - 20,  //Top most position
 									choiceWidth, //width
 									(float)Screen.height*0.12f //height
 									), choice2Text)) {
-			buttonClicked = 2;
+			buttonClicked = 1;
 		}
 		if (GUI.Button (new Rect (	Screen.width - padding - choiceWidth,  //Left most position
 									Screen.height - padding - 20,  //Top most position
 									choiceWidth, //width
 									(float)Screen.height*0.12f //height
 									), choice3Text)) {
-			buttonClicked = 3;
+			buttonClicked = 2;
 		}
+	}
+
+	void printPhrasesAt(int lineNum) 
+	{
+		choice1Text = parser.GetPhrase (lineNum);
+		choice2Text = parser.GetPhrase (lineNum + 1);
+		choice3Text = parser.GetPhrase (lineNum + 2);
 	}
 }

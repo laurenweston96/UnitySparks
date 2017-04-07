@@ -15,4 +15,4 @@
 15,,I know we'd be perfect?,2,ROMANTIC,GOTH.LAIDBACK
 16,,you.,2,COWBOY.ROMANTIC,SHY
 17,,to go.,-7,,
-18,,my meemaw,-7,ROMANTIC.SHY,
+18,,my meemaw.,-7,ROMANTIC.SHY,

@@ -45,7 +45,6 @@ public class DialogueParser : MonoBehaviour {
 		string path = "Assets/Resources/" + filename;
 		string line;
 		StreamReader r = new StreamReader(path);
-
 		using(r)
 		{
 			do
@@ -113,7 +112,7 @@ public class DialogueParser : MonoBehaviour {
 
 	public string GetPhrase(int lineNumber)
 	{
-		if (lineNumber != -1 & lineNumber < lines.Count)
+		if (lineNumber != -1 & lineNumber <= lines.Count)
 			return lines [lineNumber-1].phrase;
 
 		return "";
