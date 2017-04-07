@@ -49,17 +49,19 @@ public class DialogueBox : MonoBehaviour {
 			} else {
 				//Playing the game
 
-				//Save this into your phrase
+				//Save the phrase you have chosen into your speech
 				yourPhrase += parser.GetPhrase(lineNum + buttonClicked);
-
 				dialogue = yourPhrase;
-				//have this work for the lineNum YOU SELECTED
+
+				//Get the start of the next phrases that follow on from the phrase you chose.
 				lineNum = parser.GetNextID (prevLineNum + buttonClicked);
+
+				//If there is no next phrase then end the game
 				if (lineNum == -1) {
-					//End of the game
 					dialogue = "Game over, you said '" + yourPhrase + "'";
 					choice1Text = choice2Text = choice3Text = "";
 				} else {
+					//Print the next phrases you can say from your last choice
 					printPhrasesAt (lineNum);
 					prevLineNum = lineNum;
 				}
