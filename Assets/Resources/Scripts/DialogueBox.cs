@@ -15,6 +15,8 @@ public class DialogueBox : MonoBehaviour {
 	int prevLineNum;
 	int buttonClicked;
 
+	string yourPhrase; //built up as you add selections
+
 	public GUIStyle customStyle;
 	public GUIStyle choiceStyle;
 
@@ -35,8 +37,7 @@ public class DialogueBox : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (buttonClicked >= 0) {
-			//Playing the game
+		if (buttonClicked >= 0) {				
 			if (lineNum == 0) {
 				//Start of the game
 				lineNum = 1;
@@ -47,12 +48,16 @@ public class DialogueBox : MonoBehaviour {
 				prevLineNum = 1;
 			} else {
 				//Playing the game
-				dialogue = "contruction of your phrase";
+
+				//Save this into your phrase
+				yourPhrase += parser.GetPhrase(lineNum + buttonClicked);
+
+				dialogue = yourPhrase;
 				//have this work for the lineNum YOU SELECTED
 				lineNum = parser.GetNextID (prevLineNum + buttonClicked);
 				if (lineNum == -1) {
 					//End of the game
-					dialogue = "Finito!";
+					dialogue = "Game over, you said '" + yourPhrase + "'";
 					choice1Text = choice2Text = choice3Text = "";
 				} else {
 					printPhrasesAt (lineNum);
