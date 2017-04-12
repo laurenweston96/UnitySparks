@@ -8,17 +8,24 @@ public class DialogueBox : MonoBehaviour {
 	DialogueParser parser;
 
 	public string dialogue;
-	public string choice1Text;
-	public string choice2Text;
-	public string choice3Text;
+	public string choice1Text, choice2Text, choice3Text;
 	int lineNum;
-	int prevLineNum;
 	int buttonClicked;
+	int choice;
 
 	string yourPhrase; //built up as you add selections
+	Personality yourDate; //Enum for your date's personality
+	int score;
 
 	public GUIStyle customStyle;
 	public GUIStyle choiceStyle;
+
+	enum Personality {CHAV,
+										COWBOY,
+										GOTH,
+										LAIDBACK,
+										ROMANTIC,
+										SHY};
 
 	DialogueBox(int l)
 	{
@@ -27,12 +34,9 @@ public class DialogueBox : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		dialogue = "";
-		choice1Text = "";
-		choice2Text = "";
-		choice3Text = "";
+		InitialiseVars();
 		parser = GameObject.Find ("DialogueParser").GetComponent<DialogueParser> ();
-		buttonClicked = -1;
+		FindBlindDate();
 	}
 	
 	// Update is called once per frame
@@ -43,18 +47,19 @@ public class DialogueBox : MonoBehaviour {
 				lineNum = 1;
 
 				dialogue = "Select a choice below.";
-				printPhrasesAt (lineNum);
-
-				prevLineNum = 1;
+				PrintPhrasesAt (lineNum);
 			} else {
-				//Playing the game
+				//Continuing the game
+				choice = lineNum + buttonClicked;
 
 				//Save the phrase you have chosen into your speech
-				yourPhrase += parser.GetPhrase(lineNum + buttonClicked);
+				yourPhrase += parser.GetPhrase(choice);
 				dialogue = yourPhrase;
 
+				ScorePhrase(choice);
+
 				//Get the start of the next phrases that follow on from the phrase you chose.
-				lineNum = parser.GetNextID (prevLineNum + buttonClicked);
+				lineNum = parser.GetNextID (choice);
 
 				//If there is no next phrase then end the game
 				if (lineNum == -1) {
@@ -62,8 +67,7 @@ public class DialogueBox : MonoBehaviour {
 					choice1Text = choice2Text = choice3Text = "";
 				} else {
 					//Print the next phrases you can say from your last choice
-					printPhrasesAt (lineNum);
-					prevLineNum = lineNum;
+					PrintPhrasesAt (lineNum);
 				}
 			}
 			//Reset the button clicked
@@ -75,12 +79,76 @@ public class DialogueBox : MonoBehaviour {
 	{
 		float padding = Screen.width * 0.05f;
 		float choiceWidth = Screen.width * 0.28f;
+		createDialogueBox(padding, choiceWidth);
+		createButtons(padding, choiceWidth);
+	}
+	
+	void InitialiseVars()
+	{
+		dialogue = "";
+		choice1Text = choice2Text = choice3Text = "";
+		buttonClicked = -1;
+		score = 0;
+	}
+	
+	void FindBlindDate()
+	{
+		yourDate = (Personality)Random.Range(0,5);
+		print("Your date is " + yourDate.ToString()); 
+		//Load dates images and name/type
+	}
+	
+	void PrintPhrasesAt(int lineNum) 
+	{
+		choice1Text = parser.GetPhrase (lineNum);
+		choice2Text = parser.GetPhrase (lineNum + 1);
+		choice3Text = parser.GetPhrase (lineNum + 2);
+	}
+	
+	void ScorePhrase(int phrase)
+	{
+		//If your date is really impressed with this phrase, get a lot of points
+		foreach (string personality in parser.GetAttracts(phrase)) 
+		{
+			if (personality == yourDate.ToString())
+			{
+				print("Your date loved that!");
+				specialReaction = 10;
+				break;
+			}
+		}
+		//If your date really hates this phrase, lose a lot of points
+		foreach (string personality in parser.GetOffends(phrase)) 
+		{
+			if (personality == yourDate.ToString())
+			{
+				print("Your date hated that!");
+				specialReaction = -10;
+				break;
+			}
+		}
+		
+		if (specialReaction == 0 ) //just to test, can remove this
+			print("Your date didn't think much of that phrase");
+			
+		//If this phrase had no special reaction on your date, get the average rating
+		score += (specialReaction == 0) ? parser.GetRating(phrase)
+																			: specialReaction)
+	}
+	
+	//Create the box to show the text
+	void createDialogueBox(float padding, float choiceWidth)
+	{
 		dialogue = GUI.TextField (new Rect (0 + padding, //Left most position
 											Screen.height/2+padding, //Top most position
 											(float)Screen.width*0.9f, //width
 											(float)Screen.height*0.2f //height
 											), dialogue, customStyle);
-
+	}		
+	
+	//The three choices of phrases you get
+	void createButtons(float padding, float choiceWidth)
+	{
 		if (GUI.Button (new Rect (	padding,  //Left most position
 									Screen.height - padding - 20,  //Top most position
 									choiceWidth, //width
@@ -102,12 +170,5 @@ public class DialogueBox : MonoBehaviour {
 									), choice3Text)) {
 			buttonClicked = 2;
 		}
-	}
-
-	void printPhrasesAt(int lineNum) 
-	{
-		choice1Text = parser.GetPhrase (lineNum);
-		choice2Text = parser.GetPhrase (lineNum + 1);
-		choice3Text = parser.GetPhrase (lineNum + 2);
 	}
 }
