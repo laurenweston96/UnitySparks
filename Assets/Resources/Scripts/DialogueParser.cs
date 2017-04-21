@@ -75,11 +75,13 @@ public class DialogueParser : MonoBehaviour {
 					List<string> lstAttracts = new List<string>();
 					List<string> lstOffends = new List<string>();
 
-					foreach(string attracts in lineValues[4].Split('.'))
-						lstAttracts.Add(attracts);
-					
-					foreach(string offends in lineValues[5].Split('.'))
-						lstOffends.Add(offends);
+					if(lineValues[4] != "")
+						foreach(string attracts in lineValues[4].Split('.'))
+							lstAttracts.Add(attracts);
+
+					if(lineValues[5] != "")
+						foreach(string offends in lineValues[5].Split('.'))
+							lstOffends.Add(offends);
 
 
 					//Create a new line object for this line of the text file. Add to the list

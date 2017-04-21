@@ -49,6 +49,8 @@
      <Compile Include="Assets\Resources\Scripts\Choice.cs" />
      <Compile Include="Assets\Resources\Scripts\DialogueBox.cs" />
      <Compile Include="Assets\Resources\Scripts\DialogueParser.cs" />
+     <Compile Include="Assets\Resources\Scripts\Score.cs" />
+     <Compile Include="Assets\Resources\Scripts\World.cs" />
      <None Include="Assets\Resources\phrases.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

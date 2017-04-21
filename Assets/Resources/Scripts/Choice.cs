@@ -5,21 +5,18 @@ using System;
 
 public class Choice : MonoBehaviour {
 
-	// Use this for initialization
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		
 	}
 
 	void OnMouseDown()
 	{
-		//send this choice
+		//When this button is clicked, send the name of this object (i.e. a number 0,1 or 2)
 		int number;
 		Int32.TryParse(gameObject.name, out number);
-		//DialogueBox.lineNum = number;
 	}
 }
