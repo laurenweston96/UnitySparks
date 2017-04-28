@@ -4,9 +4,9 @@ using UnityEngine;
 using System.IO;
 using System;
 
-public class DialogueParser : MonoBehaviour {
+public static class DialogueParser {
 
-	List<DialogueLine> lines;
+	static List<DialogueLine> lines;
 
 	struct DialogueLine {
 		public int ID;
@@ -29,19 +29,14 @@ public class DialogueParser : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	static DialogueParser() {
 		string file = "phrases.txt";
 
 		lines = new List<DialogueLine>();
 		LoadDialogue(file);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-	void LoadDialogue(string filename){
+	static void LoadDialogue(string filename){
 		string path = "Assets/Resources/" + filename;
 		string line;
 		StreamReader r = new StreamReader(path);
@@ -96,7 +91,7 @@ public class DialogueParser : MonoBehaviour {
 		}
 	}
 
-	public int GetID(int lineNumber)
+	public static int GetID(int lineNumber)
 	{
 		if (lineNumber >= 0 & lineNumber < lines.Count)
 			return lines [lineNumber].ID;
@@ -104,7 +99,7 @@ public class DialogueParser : MonoBehaviour {
 		return -1;
 	}
 
-	public int GetNextID(int lineNumber)
+	public static int GetNextID(int lineNumber)
 	{
 		if (lineNumber >= 0 & lineNumber < lines.Count)
 			return lines [lineNumber-1].nextID;
@@ -112,7 +107,7 @@ public class DialogueParser : MonoBehaviour {
 		return -1;
 	}
 
-	public string GetPhrase(int lineNumber)
+	public static string GetPhrase(int lineNumber)
 	{
 		if (lineNumber != -1 & lineNumber <= lines.Count)
 			return lines [lineNumber-1].phrase;
@@ -120,7 +115,7 @@ public class DialogueParser : MonoBehaviour {
 		return "";
 	}
 
-	public int GetRating(int lineNumber)
+	public static int GetRating(int lineNumber)
 	{
 		if (lineNumber >= 0 & lineNumber < lines.Count)
 			return lines [lineNumber].rating;
@@ -128,7 +123,7 @@ public class DialogueParser : MonoBehaviour {
 		return -1;
 	}
 
-	public List<string> GetAttracts(int lineNumber)
+	public static List<string> GetAttracts(int lineNumber)
 	{
 		if (lineNumber < lines.Count)
 			return lines [lineNumber].attracts;
@@ -136,7 +131,7 @@ public class DialogueParser : MonoBehaviour {
 		return null;
 	}
 
-	public List<string> GetOffends(int lineNumber)
+	public static List<string> GetOffends(int lineNumber)
 	{
 		if (lineNumber < lines.Count)
 			return lines [lineNumber].offends;

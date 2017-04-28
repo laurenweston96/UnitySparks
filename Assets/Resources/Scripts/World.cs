@@ -5,7 +5,6 @@ using System;
 
 public static class World {
 
-	public static DialogueParser parser;
 	public static int lineNum;
 
 	public static Personality yourDate; //Enum for your date's personality
@@ -20,12 +19,7 @@ public static class World {
 
 
 	static World () {
-		parser = new DialogueParser();
 		FindBlindDate();		
-	}
-
-	static void Update () {
-		
 	}
 
 	static void FindBlindDate()
@@ -37,6 +31,6 @@ public static class World {
 
 	public static void SavePhrase(int choice)
 	{
-		yourPhrase += parser.GetPhrase(choice);
+		yourPhrase += DialogueParser.GetPhrase(choice);
 	}
 }

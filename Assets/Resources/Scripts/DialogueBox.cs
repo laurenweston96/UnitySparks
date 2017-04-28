@@ -23,12 +23,14 @@ public class DialogueBox : MonoBehaviour {
 	void Update () {
 		if (buttonClicked >= 0) {				
 			if (World.lineNum == 0) {
+				Debug.Log ("Setting up the game");
 				//Start of the game
 				World.lineNum = 1;
 
 				dialogue = "Select a choice below.";
 				ShowNextPhrases();
 			} else {
+				Debug.Log ("Playing the game");
 				//Continuing the game
 				choice = World.lineNum + buttonClicked;
 
@@ -40,8 +42,8 @@ public class DialogueBox : MonoBehaviour {
 				Score.ScorePhrase(choice);
 
 				//Get the start of the next phrases that follow on from the phrase you chose.
-				World.lineNum = World.parser.GetNextID (choice);
-
+				World.lineNum = DialogueParser.GetNextID (choice);
+				Debug.Log ("Got the next line");
 				//If there is no next phrase then end the game
 				if (World.lineNum == -1) {
 					dialogue = "Game over, you said '" + World.yourPhrase + "'";
@@ -73,9 +75,9 @@ public class DialogueBox : MonoBehaviour {
 
 	void ShowNextPhrases() 
 	{
-		choice1Text = World.parser.GetPhrase (World.lineNum);
-		choice2Text = World.parser.GetPhrase (World.lineNum + 1);
-		choice3Text = World.parser.GetPhrase (World.lineNum + 2);
+		choice1Text = DialogueParser.GetPhrase (World.lineNum);
+		choice2Text = DialogueParser.GetPhrase (World.lineNum + 1);
+		choice3Text = DialogueParser.GetPhrase (World.lineNum + 2);
 	}
 	
 	//Create the box to show the text
