@@ -29,6 +29,7 @@ public class DialogueBox : MonoBehaviour {
 
 				dialogue = "Select a choice below.";
 				ShowNextPhrases();
+				Score.UpdateScore ();
 			} else {
 				Debug.Log ("Playing the game");
 				//Continuing the game
